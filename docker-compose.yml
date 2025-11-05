@@ -1,0 +1,45 @@
+# Docker Compose'un modern bir sürümünü kullanıyoruz
+version: '3.8'
+
+# 'services' (hizmetler), projemizin 'kutucuklarıdır'.
+services:
+
+  # 1. Servis: Backend (Bizim FastAPI API'miz)
+  backend:
+    build: ./backend  # "Tarifini (Dockerfile) ./backend klasöründe bul"
+    ports:
+      - "8000:8000"  # Bilgisayarımın 8000 portunu, bu kutucuğun 8000 portuna bağla
+    volumes:
+      - ./backend:/app  # "Bilgisayarımdaki ./backend klasörünü, kutucuktaki /app klasörüne canlı bağla"
+                      # (Bu sayede kodumu kaydettiğim an, kutucuk anında değişikliği görür)
+    env_file:
+      - ./.env        # "Gizli bilgileri (DATABASE_URL) bu dosyadan oku"
+    depends_on:
+      - db            # "Sakın 'db' servisi çalışmaya başlamadan beni başlatma!"
+
+  # 2. Servis: Frontend (Bizim React Arayüzümüz)
+  frontend:
+    build: ./frontend # "Tarifini (Dockerfile) ./frontend klasöründe bul"
+    ports:
+      - "3000:3000"  # Bilgisayarımın 3000 portunu, React'in 3000 portuna bağla
+    volumes:
+      - ./frontend/src:/app/src # "Sadece /src klasörünü canlı bağla"
+                              # (React'te genellikle sadece /src değişir, bu daha hızlıdır)
+    stdin_open: true # Bu satırlar, React'in canlı-yenileme özelliğinin
+    tty: true        # Docker içinde düzgün çalışması için gereklidir.
+
+  # 3. Servis: Veritabanı (PostgreSQL)
+  db:
+    image: postgres:15-alpine # "Bunun tarifi yok, hazır 'postgres:15-alpine' imajını indir"
+                             # ('alpine' en hafif versiyonudur, çok iyidir)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/ # "Tüm verileri 'postgres_data' adında kalıcı bir alana kaydet"
+                                              # (Kutucuk kapansa bile veriler güvende)
+    env_file:
+      - ./.env        # "Kurulum ayarlarını (POSTGRES_USER, vb.) bu dosyadan oku"
+    ports:
+      - "5432:5432"  # Veritabanı portunu bilgisayarımıza aç (DBeaver gibi araçlarla bağlanmak için)
+
+# 'volumes', yukarıda 'db' servisinin kullandığı 'postgres_data' alanını resmi olarak tanımlar
+volumes:
+  postgres_data:

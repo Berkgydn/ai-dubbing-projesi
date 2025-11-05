@@ -1,0 +1,12 @@
+# --- Sunucu için ---
+fastapi           # Bizim ana web framework'ümüz (API oluşturmak için)
+uvicorn[standard] # FastAPI'yi çalıştıran yüksek performanslı sunucu
+
+# --- Veritabanı Bağlantısı için ---
+psycopg2-binary   # Python'un PostgreSQL ile konuşmasını sağlayan "sürücü" (driver)
+SQLAlchemy        # Python'da SQL kodları yazmadan veritabanı ile konuşmamızı sağlayan kütüphane (ORM)
+
+# --- Güvenlik ve Ayarlar için ---
+python-dotenv     # .env dosyamızdaki (DATABASE_URL) değişkenlerini okumak için
+passlib[bcrypt]   # Kullanıcı şifrelerini güvenli bir şekilde hash'lemek (şifrelemek) için
+python-jose[cryptography] # Kullanıcı giriş yaptığında JWT (Token) oluşturmak ve doğrulamak için
