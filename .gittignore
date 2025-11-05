@@ -1,0 +1,48 @@
+# Gizli dosyalar (ÇOK ÖNEMLİ)
+# Bu satır, tüm .env dosyalarını ve API anahtarlarımızı korur
+.env
+*.env
+*.env.local
+
+# Python artıkları
+__pycache__/
+*.pyc
+.pytest_cache/
+
+#__pycache__/: Python'un .pyc (derlenmiş kod) dosyalarını sakladığı otomatik oluşan bir klasördür.
+#Kaynak kodla bir ilgisi yoktur, makine tarafından üretilir.
+
+#.pytest_cache/: İleride projemize test yazarsak (Pytest ile),
+# test aracının oluşturduğu önbellek klasörüdür.
+
+
+
+
+# Node.js artıkları
+# Bu, 500MB'lık devasa 'node_modules' klasörünün GitHub'a gitmesini engeller
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# node_modules/: Frontend (React) projemizi kurduğumuzda, React'in ve diğer tüm kütüphanelerin (binlerce küçük dosya) indirildiği klasördür.
+ Bu klasörün boyutu yüzlerce Megabyte (MB), hatta bazen Gigabyte (GB) olabilir.
+
+#npm-debug.log:
+# Bu satır olmasaydı, git push komutuyla 500MB'lık veriyi GitHub'a yüklemeye çalışırdınız. 
+# Bu hem çok uzun sürer hem de GitHub'ın amacı bu değildir. Doğru yöntem şudur: Biz sadece hangi kütüphanelere ihtiyacımız olduğunu (package.json adında bir dosyayla) söyleriz,
+# kütüphanelerin kendisini (node_modules/) asla yüklemeyiz. Projeyi alan başka biri (npm install komutuyla) o kütüphaneleri kendisi indirir.
+
+
+
+# IDE/OS dosyaları
+.vscode/  #VS Code kullanıyorsanız, o proje için yaptığınız kişisel ayarlar(örn : hangi temayı kullandığınız)
+.idea/        # Eğer projenize siz değil de PyCharm veya WebStorm kullanan başka biri dahil olursa, onun editörü de bu klasörü oluşturur.
+.DS_Store   #macOS (Apple) işletim sisteminin  klasörlerin görünüm ayarlarını (ikonların yeri vb.) saklamak için oluşturduğu bir dosyadır.
+
+#Neden Önemli?
+# Proje arkadaşınızın VS Code'da hangi dosyaları açık bıraktığı sizi ilgilendirmez, değil mi? Bu ayarlar projeye değil, kişiye özeldir. Bunları görmezden gelmek, depoyu yine "temiz" tutar.
+
+
+
+
