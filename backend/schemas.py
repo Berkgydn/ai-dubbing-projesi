@@ -41,3 +41,21 @@ class User(BaseModel):
         # gelse bile, sen o nesnenin 'id', 'email' gibi ÖZELLİKLERİNİ (attributes)
         # okuyup bu 'User' zarfına dönüştürmeyi akıl et."
         from_attributes = True
+
+
+# --- Pasaport Zarfları ---
+
+# Zarf 3: Pasaport (Backend -> Frontend)
+# Başarılı bir '/login' isteğinden sonra Frontend'e
+# NE göndereceğiz? "Pasaportun" kendisini.
+class Token(BaseModel):
+    access_token: str  # 'eyJhbGciOi...' gibi upuzun şifreli metin
+    token_type: str    # Genellikle sadece "bearer" yazar
+
+# Zarf 4: Pasaportun İçeriği (Sadece Backend İçi Kullanım)
+# (Bu, ileride pasaportu 'okurken' kullanacağımız bir şablon)
+class TokenData(BaseModel):
+    email: str | None = None
+
+
+

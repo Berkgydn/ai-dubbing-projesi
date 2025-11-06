@@ -22,12 +22,21 @@ services:
     build: ./frontend # "Tarifini (Dockerfile) ./frontend klasöründe bul"
     ports:
       - "3000:3000"  # Bilgisayarımın 3000 portunu, React'in 3000 portuna bağla
+    # Yeniledik package.json a indirdiğimiz şeyler package.json a yansımadı diye:
+# DOĞRU VE AÇIK KISIM:
     volumes:
-      - ./frontend/src:/app/src # "Sadece /src klasörünü canlı bağla"
-                              # (React'te genellikle sadece /src değişir, bu daha hızlıdır)
-    stdin_open: true # Bu satırlar, React'in canlı-yenileme özelliğinin
-    tty: true        # Docker içinde düzgün çalışması için gereklidir.
+      # Portal 1 (BİND): 'Dünya 1'deki kodumu, 'Dünya 2'deki /app'e 'bağla'.
+      - type: bind
+        source: ./frontend
+        target: /app
 
+      # Portal 2 (VOLUME): 'Dünya 2'nin (kutucuğun) İÇİNDEKİ '/app/node_modules' 
+      # klasörü için, 'Dünya 1'e (bilgisayara) BAĞLI OLMAYAN, 
+      # Docker'ın kendi yönettiği ayrı bir 'volume' (depolama alanı) oluştur.
+      # Bu, 'Portal 1'in o klasörü ezmesini engeller.
+      - type: volume
+        target: /app/node_modules
+        
   # 3. Servis: Veritabanı (PostgreSQL)
   db:
     image: postgres:15-alpine # "Bunun tarifi yok, hazır 'postgres:15-alpine' imajını indir"
