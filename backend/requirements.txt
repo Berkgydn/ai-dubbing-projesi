@@ -8,5 +8,9 @@ SQLAlchemy        # Python'da SQL kodları yazmadan veritabanı ile konuşmamız
 
 # --- Güvenlik ve Ayarlar için ---
 python-dotenv     # .env dosyamızdaki (DATABASE_URL) değişkenlerini okumak için
-passlib[bcrypt]   # Kullanıcı şifrelerini güvenli bir şekilde hash'lemek (şifrelemek) için
+passlib          # passlib'in en son sürümünü kur (bu sorunsuz)
+bcrypt==4.3.0    # bcrypt'i "NİHAİ ÇÖZÜM" olan 4.3.0'a KİLİTLE
+  # Kullanıcı şifrelerini güvenli bir şekilde hash'lemek (şifrelemek) için
+
+
 python-jose[cryptography] # Kullanıcı giriş yaptığında JWT (Token) oluşturmak ve doğrulamak için

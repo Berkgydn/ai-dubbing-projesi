@@ -12,13 +12,43 @@ import models, schemas, crud, security
 # Bizim "Tesisatçı" dosyalarımız (Motor ve Konuşma Fabrikası)
 from database import Base, engine, SessionLocal
 
+
+# ... (diğer import'ların yanına)
+from fastapi.middleware.cors import CORSMiddleware
+
 # --- İNŞAAT EMRİ (Bu hala çok önemli) ---
 # FastAPI başladığı an, Mimarın (models) planlarına bakarak
 # Tesisatçının (engine) rafları (tabloları) inşa etmesini sağlar.
 models.Base.metadata.create_all(bind=engine)
 
 # FastAPI uygulamasını "app" adıyla oluştur
+# FastAPI uygulamasını "app" adıyla oluştur
 app = FastAPI()
+
+# --- YENİ EKLENEN CORS TABELASI (Adım 2.12 Düzeltmesi) ---
+#
+# Bu, "B Apartmanı"nın (Backend) girişine astığımız "Tabela"dır.
+
+# "origins" (İzin Verilen Kaynaklar/Apartmanlar)
+# Sadece 'http://localhost:3000' (bizim Frontend'imiz) adresinden
+# gelen isteklere izin ver.
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins, # 'origins' listemizdeki sitelere izin ver
+    allow_credentials=True, # Çerezlere (ileride gerekirse) izin ver
+    allow_methods=["*"],    # TÜM metotlara (* = GET, POST, OPTIONS, vb.) izin ver
+    allow_headers=["*"],    # TÜM başlıklara (*) izin ver
+)
+# --- YENİ EKLENEN KISIM BİTTİ ---
+
+
+# === 2. VERİTABANI "GİRİŞ İZNİ" YARDIMCISI ===
+# (Geri kalan kodunuz ('get_db', '@app.get("/")' vb.) 
+#  olduğu gibi kalacak)
 
 
 # === 2. VERİTABANI "GİRİŞ İZNİ" YARDIMCISI ===
